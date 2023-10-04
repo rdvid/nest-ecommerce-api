@@ -13,10 +13,9 @@ export class UserDatabase {
         return this.users;
     }
 
-    async emailExists(email){
+    async emailExists(email:string){
         const user = this.users.find((user) => { return user.email === email});
         return user !== undefined;
     }
-
    
 }

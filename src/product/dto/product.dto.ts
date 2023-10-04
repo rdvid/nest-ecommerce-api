@@ -1,7 +1,8 @@
-import { ArrayMinSize, ArrayNotEmpty, IsArray, IsNotEmpty, 
-        IsNumber, IsString, MaxLength, Min } from "class-validator";
+import { ArrayMinSize, ArrayNotEmpty, IsArray, IsDate, IsEmpty, IsNotEmpty, 
+        IsNumber, IsOptional, IsString, MaxLength, Min } from "class-validator";
 
 export class CreateProductDto {
+
     @IsString()
     @IsNotEmpty()
     name: string;
@@ -11,7 +12,7 @@ export class CreateProductDto {
     value: number;
 
     @Min(0)
-    quantity: number;
+    quantityAvailable: number;
 
     @IsNotEmpty()
     @IsString()
@@ -29,7 +30,20 @@ export class CreateProductDto {
     @IsString()
     @IsNotEmpty()
     category: string;
+
+    @IsDate()
+    @IsOptional()
+    createdAt?: Date;
+
+    @IsDate()
+    @IsOptional()
+    updatedAt?: Date;
+
+    @IsNumber()
+    @IsOptional()
+    userId: number;
 }
+
 
 class ProductCharacteristicDto {
     @IsString()

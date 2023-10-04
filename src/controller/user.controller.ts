@@ -19,7 +19,7 @@ export class UserController{
     }
 
     @Get('/:id')
-    async listUser(@Param() id, @Query() name){
+    async listUser(@Param() id: string, @Query() name: string){
         return id
     }
 
