@@ -11,24 +11,12 @@ export class ProductController{
 
     @Post()
     async createProduct(@Body() productData: CreateProductDto){
-        const product = new ProductEntity();
-        product.id = uuid();
-        product.name = productData.name;
-        product.value = productData.value;
-        product.quantity = productData.quantityAvailable;
-        product.description = productData.description;
-        product.userId = productData.userId
-        product.category = productData.category
-        product.createdAt = new Date();
-    
-        product.name = productData.name;
-        product.name = productData.name;
         
-        await this.productService.createProduct(product)
+        const newProduct = await this.productService.createProduct(productData)
         
         return { 
-            id : product.id, 
-            message: 'product created successfully' 
+            message: 'product created successfully',
+            product : newProduct, 
         };
     }
 

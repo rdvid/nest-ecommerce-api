@@ -11,7 +11,7 @@ export class EditProductDto {
     value: number;
 
     @Min(0)
-    quantityAvailable: number;
+    availableQuantity: number;
 
     @IsNotEmpty()
     @IsString()
