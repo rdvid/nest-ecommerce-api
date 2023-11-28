@@ -38,8 +38,6 @@ export class EditProductDto {
     @IsOptional()
     updatedAt?: Date;
 
-    @IsUUID()
-    userId: string;
 }
 
 

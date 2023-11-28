@@ -43,9 +43,6 @@ export class CreateProductDto {
     @IsOptional()
     updatedAt?: Date;
 
-    @IsOptional()
-    @IsString()
-    userId: string;
 }
 
 class CreateProductCharacteristicDto {

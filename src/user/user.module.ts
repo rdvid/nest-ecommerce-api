@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { UserController } from "src/controller/user.controller";
+import { UserController } from "../user/user.controller";
 import { UserDatabase } from "./user.database";
 import { IsEmailUniqueValidator } from "./validations/isEmailUnique.validator";
 import { UserService } from "./user.service";

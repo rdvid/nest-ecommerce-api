@@ -41,7 +41,6 @@ export class ProductService {
         } : param = {};
         
         const products = await this.productDatabase.find(param);
-            console.log(products)
         const productList = products.map((product) => new ListProductDto(
             product.id,
             product.name,

@@ -1,4 +1,5 @@
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { OrderEntity } from '../order/order.entity';
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -24,16 +25,19 @@ export class UserEntity {
     @DeleteDateColumn({ name: 'deleted_at'})
     deletedAt: string;
 
-    constructor(user?: Partial<UserEntity>) {
-        this.id = user?.id,
-        this.name = user?.name,
-        this.email = user?.email,
-        this.password = user?.password,
-        this.createdAt = user?.createdAt,
-        this.updatedAt = user?.updatedAt,
-        this.deletedAt = user?.deletedAt
-    }
-}
+    // constructor(user?: Partial<UserEntity>) {
+    //     this.id = user?.id,
+    //     this.name = user?.name,
+    //     this.email = user?.email,
+    //     this.password = user?.password,
+    //     this.createdAt = user?.createdAt,
+    //     this.updatedAt = user?.updatedAt,
+    //     this.deletedAt = user?.deletedAt
+    // }
+
+    @OneToMany(()=> OrderEntity, (order) => order.user)
+    orders: OrderEntity[]
+}   
 
 
 
