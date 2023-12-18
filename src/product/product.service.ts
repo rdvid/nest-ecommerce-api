@@ -41,6 +41,11 @@ export class ProductService {
         } : param = {};
         
         const products = await this.productDatabase.find(param);
+
+        if(id && !products.length){
+            return "Not Found"
+        }
+
         const productList = products.map((product) => new ListProductDto(
             product.id,
             product.name,

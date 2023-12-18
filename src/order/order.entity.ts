@@ -1,6 +1,7 @@
 import { Entity, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, OneToMany, OneToOne, ManyToMany, ManyToOne } from 'typeorm';
 import { OrderStatus } from './enum/orderstatus.enum';
 import { UserEntity } from '../user/user.entity';
+import { OrderItemEntity } from './orderitem.entity';
 
 @Entity({ name: 'orders' })
 export class OrderEntity {
@@ -25,6 +26,11 @@ export class OrderEntity {
 
     @ManyToOne(()=>UserEntity, (user)=>user.orders)
     user: UserEntity
+
+    @OneToMany(() => OrderItemEntity, (orderItem) => orderItem.order, {
+        cascade: true
+    })
+    orderItems: OrderItemEntity[]
 
 }
 
