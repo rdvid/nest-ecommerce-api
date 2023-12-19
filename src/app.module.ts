@@ -10,6 +10,7 @@ import { OrderModule } from './order/order.module';
   imports: [
     UserModule, 
     ProductModule,
+    OrderModule,
     ConfigModule.forRoot({
       isGlobal: true
     }),
@@ -17,8 +18,6 @@ import { OrderModule } from './order/order.module';
       useClass: PostgresConfigService,
       inject: [ PostgresConfigService ]
     }),
-    OrderModule,
-
   ],
 })
 export class AppModule {}

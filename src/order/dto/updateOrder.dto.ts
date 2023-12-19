@@ -1,3 +1,5 @@
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateOrderDto } from './createOrder.dto';
 import { Type } from "class-transformer";
 import { 
     ArrayNotEmpty,
@@ -25,11 +27,12 @@ class OrderItemDto {
 
 }
 
-export class CreateOrderDto {
+export class UpdateOrderDto extends PartialType(CreateOrderDto) {
 
     @IsArray()
     @ArrayNotEmpty()
     @Type(() => OrderItemDto)
     orderItems: OrderItemDto[];
-    
+
 }
+
