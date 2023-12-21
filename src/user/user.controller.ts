@@ -28,33 +28,31 @@ export class UserController{
     }
 
     @Get()
-    async listUsers(){
-        // TODO: implement feature of query filtering
+    async listUsers(@Query('email') email: string){
+        
+        if(email){
+            return await this.userService.retrieveUser('', email);
+        }
+
         const users = await this.userService.listUsers();
         return users;
     }
 
     @Get('/:id')
     async getUser(@Param() id: string){
-        const user = await this.userService.listUsers(id['id'])
+
+        const user = await this.userService.retrieveUser(id);
         return user;
     }
 
     @Put('/:id')
-    async edituser(@Param() id: string, @Body() userUpdateData: EditUserDto){
-       const updatedUser = await this.userService.editUser(id['id'], userUpdateData) 
-       return { 
-            user : updatedUser, 
-            message: 'user updated successfully' 
-        };
+    async edituser(@Param('id') id: string, @Body() userUpdateData: EditUserDto){
+       return await this.userService.editUser(id, userUpdateData) 
     }
 
     @Delete('/:id')
-    async deleteUser(@Param() id: string) {
-        await this.userService.deleteUser(id['id']);
-        return {
-            message: 'user deleted successfully'
-        }
+    async deleteUser(@Param('id') id: string) {
+        return await this.userService.deleteUser(id);
     }
 
 

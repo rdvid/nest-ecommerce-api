@@ -110,7 +110,7 @@ export class OrderService {
       order.totalAmount,
       order.status,
       order.createdAt,
-      new ListUserDto(order.user.id, order.user.name)
+      new ListUserDto(order.user.id, order.user.name, order.user.email)
     ))
 
     return orderList

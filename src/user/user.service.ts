@@ -1,10 +1,10 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import { ListUserDto } from "./dto/listUser.dto";
 import { UserEntity } from "./user.entity";
 import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
-import { UserDatabase } from "./user.database";
 import { EditUserDto } from "./dto/editUser.dto";
+import { CreateUserDto } from "./dto/createUser.dto";
  
 @Injectable()
 export class UserService {
@@ -14,33 +14,82 @@ export class UserService {
         private readonly userDatabase: Repository<UserEntity>
     ) {}
 
-    public async listUsers(id?: string) {
+    public async listUsers() {
 
-        let param: Object;
-
-        id ? param = {
-            where: {
-                id
-            }
-        }: param = {};
-
-        const users = await this.userDatabase.find(param);
-        const userList = users.map((user) => new ListUserDto(user.id, user.name))
+        const users = await this.userDatabase.find();
+        const userList = users.map((user) => new ListUserDto(user.id, user.name, user.email))
         
-        return id ? userList[0] : userList;
+        return userList;
     }
 
-    public async createUser(user: UserEntity) {
-        await this.userDatabase.save(user);
+    public async retrieveUser(id?: string, email?: string){
+        
+        let param: Object;
+
+        param = {
+            where: [
+                id ? id : {},
+                email ? { email: email } : {}
+            ]
+        }
+            
+        const [user] = await this.userDatabase.find(param);
+       
+        if(!user){
+            throw new NotFoundException('User not found')
+        }
+
+        const retrievedUser = new ListUserDto(user.id, user.name, user.email);
+
+        return retrievedUser;
+    }
+
+    public async createUser(user: CreateUserDto) {
+
+
+
+        const newUser = new UserEntity();
+
+        Object.assign(newUser, user as UserEntity);
+        
+        return await this.userDatabase.save(newUser);
+
     }
 
 
     public async editUser(id: string, userUpdateData: EditUserDto){
-       await this.userDatabase.update(id, userUpdateData)
+
+        try {
+            
+            const user = await this.userDatabase.findOneBy({id});
+    
+            if(!user){
+                throw new NotFoundException('User not found');
+            }
+    
+            Object.assign(user, userUpdateData);
+    
+            return await this.userDatabase.save(user);
+            
+        } catch (error) {
+            throw new InternalServerErrorException(error)
+        }
+
     }
 
    
     public async deleteUser(id: string) {
-        await this.userDatabase.delete(id);
+        //TODO: fix delete constraint fk problem
+        const resultado = await this.userDatabase.delete(id);
+
+        if (!resultado.affected){
+            throw new NotFoundException('O usuário não foi encontrado.');
+        }
     }
+
+    async emailExists(email:string){
+        const user = await this.userDatabase.findOneBy({email});
+        return user !== undefined;
+    }
+
 }

@@ -25,17 +25,7 @@ export class UserEntity {
     @DeleteDateColumn({ name: 'deleted_at'})
     deletedAt: string;
 
-    // constructor(user?: Partial<UserEntity>) {
-    //     this.id = user?.id,
-    //     this.name = user?.name,
-    //     this.email = user?.email,
-    //     this.password = user?.password,
-    //     this.createdAt = user?.createdAt,
-    //     this.updatedAt = user?.updatedAt,
-    //     this.deletedAt = user?.deletedAt
-    // }
-
-    @OneToMany(()=> OrderEntity, (order) => order.user)
+    @OneToMany(()=> OrderEntity, (order) => order.user, { cascade: true, onDelete: 'CASCADE' })
     orders: OrderEntity[]
 }   
 

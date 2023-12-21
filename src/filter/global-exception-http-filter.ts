@@ -15,8 +15,8 @@ export class GlobalExceptionHttpFilter implements ExceptionFilter {
         const response = context.getResponse();
 
         const { status, body } = 
-            exception instanceof HttpException ? 
-            {
+            exception instanceof HttpException 
+            ? {
                 status: exception.getStatus(),
                 body: exception.getResponse()
             }

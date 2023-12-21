@@ -18,16 +18,14 @@ export class ProductService {
     async createProduct(productData: CreateProductDto){
         const product = new ProductEntity();
 
-        product.id = uuid();
-        product.name = productData.name;
-        product.value = productData.value;
-        product.availableQuantity = productData.availableQuantity;
-        product.description = productData.description;
-        product.characteristics = productData.characteristics
-        product.category = productData.category
-        product.images = productData.images
-    
-        return await this.productDatabase.save(product)
+        Object.assign(product, productData as ProductEntity);
+
+        product.createdAt = new Date();
+        product.updatedAt = new Date();
+        
+        const newProduct = await this.productDatabase.save(product)
+        
+        return newProduct
     }
 
     async listProducts(id?:string, name?: string){
@@ -56,8 +54,16 @@ export class ProductService {
         return id ? productList[0] : productList;
     }
 
-    async editProduct(id: string, productUpdated: EditProductDto){
-        const user = await this.productDatabase.update(id, productUpdated)
+    async editProduct(id: string, newProductData: EditProductDto){
+        const product = await this.productDatabase.findOneBy({id});
+
+        if(!product){
+            throw new NotFoundException(`Product ${id} not found`)
+        }
+
+        Object.assign(product, newProductData as ProductEntity)
+
+        return await this.productDatabase.save(product)
     }
 
     async deleteProduct(id: string){
