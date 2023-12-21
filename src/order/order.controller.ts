@@ -1,8 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put, InternalServerErrorException } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/createOrder.dto';
 import { UpdateOrderDto } from './dto/updateOrder.dto';
-import { UserEntity } from 'src/user/user.entity';
 
 @Controller('order')
 export class OrderController {
@@ -30,12 +29,17 @@ export class OrderController {
     return this.orderService.getOrders(userId)
   }
   
-  @Put('/:id')
-  async editOrder(@Param() id: string, @Body() updateOrderData: UpdateOrderDto){
-    // TODO: fix put order route
-    const updatedOrder = await this.orderService.editOrder(id['id'], updateOrderData);
-    return updatedOrder;
+  @Patch('/:id')
+  async editOrder(
+    @Param() id: string, 
+    @Body() updateOrderData: UpdateOrderDto
+  ){
+    return await this.orderService.editOrder(id['id'], updateOrderData);     
   }
 
+  @Delete('/:id')
+  async deleteOrder(@Param() id: string){
+    // TODO: develop delete order route
+  }
   
 }

@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { ProductEntity } from "./product.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -43,7 +43,7 @@ export class ProductService {
         const products = await this.productDatabase.find(param);
 
         if(id && !products.length){
-            return "Not Found"
+            throw new NotFoundException("Not Found")
         }
 
         const productList = products.map((product) => new ListProductDto(

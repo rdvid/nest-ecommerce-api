@@ -1,38 +1,20 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateOrderDto } from './createOrder.dto';
+import { CreateOrderDto, OrderItemDto } from './createOrder.dto';
 import { Type } from "class-transformer";
 import { 
     ArrayNotEmpty,
     IsArray,
+    IsEnum,
     IsNotEmpty, 
     IsNumber,  
     IsUUID,  
     Min } from "class-validator";
-
-class OrderItemDto {
-
-    @IsUUID()
-    @IsNotEmpty()
-    productId: string;
-
-    @IsNotEmpty()
-    @IsNumber()
-    @Min(0)
-    quantity: number;
-
-    @IsNotEmpty()
-    @IsNumber()
-    @Min(0)
-    price: number;
-
-}
+import { OrderStatus } from '../enum/orderstatus.enum';
 
 export class UpdateOrderDto extends PartialType(CreateOrderDto) {
 
-    @IsArray()
-    @ArrayNotEmpty()
-    @Type(() => OrderItemDto)
-    orderItems: OrderItemDto[];
+    @IsEnum(OrderStatus)
+    status: OrderStatus;
 
 }
 

@@ -7,7 +7,7 @@ import {
     IsUUID,  
     Min } from "class-validator";
 
-class OrderItemDto {
+export class OrderItemDto {
 
     @IsUUID()
     @IsNotEmpty()
