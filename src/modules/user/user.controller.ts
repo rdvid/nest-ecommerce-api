@@ -1,9 +1,7 @@
 import { Body, Controller, Get, Param, Post, Query, Put, Delete } from "@nestjs/common";
-import { CreateUserDto } from "src/user/dto/createUser.dto";
-import { EditUserDto } from "src/user/dto/editUser.dto";
-import { UserEntity } from "src/user/user.entity";
-import { UserService } from "src/user/user.service";
-import { v4 as uuid } from 'uuid';
+import { CreateUserDto } from "src/modules/user/dto/createUser.dto";
+import { EditUserDto } from "src/modules/user/dto/editUser.dto";
+import { UserService } from "src/modules/user/user.service";
 
 @Controller('/users')
 export class UserController{
@@ -14,17 +12,7 @@ export class UserController{
 
     @Post()
     async createUser(@Body() userData: CreateUserDto){
-        const user = new UserEntity()
-        user.email = userData.email
-        user.password = userData.password
-        user.name = userData.name
-        user.id = uuid()
-
-        this.userService.createUser(user);
-        return { 
-            id : user.id, 
-            message: 'user created successfully' 
-        };
+        return await this.userService.createUser(userData);
     }
 
     @Get()

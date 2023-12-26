@@ -3,8 +3,8 @@ import { OrderService } from './order.service';
 import { OrderController } from './order.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrderEntity } from './order.entity';
-import { UserEntity } from 'src/user/user.entity';
-import { ProductEntity } from 'src/product/product.entity';
+import { UserEntity } from 'src/modules/user/user.entity';
+import { ProductEntity } from 'src/modules/product/product.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([OrderEntity,UserEntity, ProductEntity])],

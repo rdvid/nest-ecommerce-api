@@ -5,7 +5,6 @@ import { Repository } from "typeorm";
 import { EditProductDto } from "./dto/editProduct.dto";
 import { ListProductDto } from "./dto/listProduct.dto";
 import { CreateProductDto } from "./dto/createProduct.dto";
-import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class ProductService {

@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { UserEntity } from "./user.entity";
-import { log } from "console";
 
 @Injectable()
 export class UserDatabase {

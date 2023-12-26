@@ -1,4 +1,4 @@
-import { ListUserDto } from "src/user/dto/listUser.dto";
+import { ListUserDto } from "src/modules/user/dto/listUser.dto";
 
 export class ListOrderDto {
     
