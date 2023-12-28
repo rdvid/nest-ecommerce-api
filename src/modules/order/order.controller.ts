@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put, InternalServerErrorException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put, InternalServerErrorException, UseGuards } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/createOrder.dto';
 import { UpdateOrderDto } from './dto/updateOrder.dto';
+import { AuthenticationGuard } from '../authentication/authentication.guard';
 
 @Controller('order')
+@UseGuards(AuthenticationGuard)
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 

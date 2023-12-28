@@ -7,12 +7,21 @@ import { ConfigModule } from '@nestjs/config';
 import { OrderModule } from './modules/order/order.module';
 import { GlobalExceptionHttpFilter } from './resources/filter/global-exception-http-filter';
 import { APP_FILTER } from '@nestjs/core';
+import { CacheModule } from '@nestjs/cache-manager';
+import { redisStore } from 'cache-manager-redis-yet';
+import { AuthenticationModule } from './modules/authentication/authentication.module';
+// TODO: change imports to relative
 
 @Module({
   imports: [
-    UserModule, 
-    ProductModule,
-    OrderModule,
+    CacheModule.registerAsync({
+      useFactory: async () => ({
+        // setting redis and defining time to leave data (1h)_
+        store: await redisStore({ ttl: 3600 * 1000 })
+      }),
+      isGlobal: true,
+      
+    }),
     ConfigModule.forRoot({
       isGlobal: true
     }),
@@ -20,8 +29,13 @@ import { APP_FILTER } from '@nestjs/core';
       useClass: PostgresConfigService,
       inject: [ PostgresConfigService ]
     }),
+    UserModule, 
+    ProductModule,
+    OrderModule,
+    AuthenticationModule,
   ],
   providers: [{
+    // defining my own filter of httperrorhandling
     provide: APP_FILTER,
     useClass: GlobalExceptionHttpFilter
   }]

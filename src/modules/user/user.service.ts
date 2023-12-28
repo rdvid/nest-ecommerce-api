@@ -22,6 +22,17 @@ export class UserService {
         return userList;
     }
 
+    public async getUserByEmail(email: string){
+        const user = await this.userDatabase.findOneBy({email});
+
+        if(!user){
+            throw new NotFoundException('User not found')
+        }
+
+        return user;
+
+    }
+
     public async retrieveUser(id?: string, email?: string){
         
         let param: Object;
@@ -45,8 +56,6 @@ export class UserService {
     }
 
     public async createUser(user: CreateUserDto) {
-
-
 
         const newUser = new UserEntity();
 
@@ -89,7 +98,7 @@ export class UserService {
 
     async emailExists(email:string){
         const user = await this.userDatabase.findOneBy({email});
-        return user !== undefined;
+        return user !== null;
     }
 
 }

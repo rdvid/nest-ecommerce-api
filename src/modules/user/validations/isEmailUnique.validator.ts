@@ -1,8 +1,5 @@
-import { ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface, registerDecorator } from "class-validator";
+import { ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface, registerDecorator } from "class-validator";
 import { HttpException, Injectable } from "@nestjs/common";
-import { UserEntity } from "../user.entity";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
 import { UserService } from "../user.service";
 
 @Injectable()
