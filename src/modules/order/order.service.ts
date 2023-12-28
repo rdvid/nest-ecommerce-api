@@ -105,25 +105,33 @@ export class OrderService {
       }
     })
 
-    const orderList = orders.map((order) => new ListOrderDto(
-      order.id,
-      order.totalAmount,
-      order.status,
-      order.createdAt,
-      new ListUserDto(order.user.id, order.user.name, order.user.email)
-    ))
+    // const orderList = orders.map((order) => new ListOrderDto(
+    //   order.id,
+    //   order.totalAmount,
+    //   order.status,
+    //   order.createdAt,
+    //   new ListUserDto(order.user.id, order.user.name, order.user.email)
+    // ))
 
-    return orderList
+    return orders
   }
 
-  async editOrder(orderId:string, newOrderData: UpdateOrderDto){
-    
-    
-    const order = await this.orderRepository.findOneBy({ id: orderId });
+  async retrieveOrder(userId:string, orderId: string){
+    const order = await this.orderRepository.findOneBy({ 
+        user: { id: userId },
+        id: orderId
+    });
 
     if(!order){
-      throw new NotFoundException('Order not found') 
+      throw new NotFoundException('order not found')
     }
+
+    return order;
+  }
+
+  async editOrder(userId: string, orderId:string, newOrderData: UpdateOrderDto){
+    
+    const order = await this.retrieveOrder(userId, orderId);
 
     Object.assign(order, newOrderData);
 

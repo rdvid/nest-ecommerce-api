@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put, InternalServerErrorException, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put, InternalServerErrorException, UseGuards, Req } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/createOrder.dto';
 import { UpdateOrderDto } from './dto/updateOrder.dto';
-import { AuthenticationGuard } from '../authentication/authentication.guard';
+import { AuthenticationGuard, RequestWithUser } from '../authentication/authentication.guard';
 
 @Controller('order')
 @UseGuards(AuthenticationGuard)
@@ -11,10 +11,12 @@ export class OrderController {
 
   @Post()
   async createOrder(
-    @Query('userId') userId: string,
+    @Req() req: RequestWithUser,
     @Body() orderData: CreateOrderDto
-    ) {
-
+  ) {
+    
+    const userId = req.user.sub;
+    
     if(!userId){
       return "User ID is mandatory"
     }
@@ -27,16 +29,19 @@ export class OrderController {
   }
 
   @Get()
-  async findAll(@Query('userId') userId: string) {
+  async findAll(@Req() req: RequestWithUser) {
+    const userId = req.user.sub;
     return this.orderService.getOrders(userId)
   }
   
   @Patch('/:id')
   async editOrder(
-    @Param() id: string, 
+    @Param('id') orderId: string, 
+    @Req() req: RequestWithUser,
     @Body() updateOrderData: UpdateOrderDto
   ){
-    return await this.orderService.editOrder(id['id'], updateOrderData);     
+    const userId = req.user.sub;
+    return await this.orderService.editOrder(userId, orderId, updateOrderData);     
   }
 
   @Delete('/:id')

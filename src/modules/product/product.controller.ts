@@ -4,18 +4,28 @@ import { CreateProductDto } from "src/modules/product/dto/createProduct.dto";
 import { ProductService } from "src/modules/product/product.service";
 import { Cache } from "cache-manager";
 import { ProductEntity } from "./product.entity";
+import { LoggerService } from "../logger/logger.service";
 
 @Controller('/products')
 export class ProductController{
 
-    constructor(private productService: ProductService,
-        @Inject(CACHE_MANAGER) private cacheManager: Cache) {}
+    constructor(
+        private productService: ProductService,
+        @Inject(CACHE_MANAGER) private cacheManager: Cache,
+        private readonly logger: LoggerService
+    ) {
+        this.logger.setContext('ProductController');
+    }
 
     @Post()
     async createProduct(@Body() productData: CreateProductDto){
         
         const newProduct = await this.productService.createProduct(productData)
-       
+
+        this.logger.logInFile(newProduct);
+
+        this.logger.coloredLog(newProduct);
+        
         return { 
             message: 'product created successfully',
             product : newProduct, 
