@@ -1,7 +1,7 @@
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
 import { Body, Controller, Get, Inject, Param, Post } from "@nestjs/common";
-import { CreateProductDto } from "src/modules/product/dto/createProduct.dto";
-import { ProductService } from "src/modules/product/product.service";
+import { CreateProductDto } from "../../modules/product/dto/createProduct.dto";
+import { ProductService } from "../../modules/product/product.service";
 import { Cache } from "cache-manager";
 import { ProductEntity } from "./product.entity";
 import { LoggerService } from "../logger/logger.service";

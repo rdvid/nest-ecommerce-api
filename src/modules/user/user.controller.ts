@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, Query, Put, Delete } from "@nestjs/common";
-import { CreateUserDto } from "src/modules/user/dto/createUser.dto";
-import { EditUserDto } from "src/modules/user/dto/editUser.dto";
-import { UserService } from "src/modules/user/user.service";
+import { CreateUserDto } from "../../modules/user/dto/createUser.dto";
+import { EditUserDto } from "../../modules/user/dto/editUser.dto";
+import { UserService } from "../../modules/user/user.service";
 import { HashPasswordPipe } from "../../resources/pipes/hashPassword.pipe";
 import { ListUserDto } from "./dto/listUser.dto";
 

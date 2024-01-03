@@ -2,9 +2,7 @@ import {
     Entity, 
     Column, 
     PrimaryGeneratedColumn, 
-    ManyToOne,
-    ManyToMany,
-    UpdateDateColumn} from 'typeorm';
+    ManyToOne } from 'typeorm';
 import { OrderEntity } from './order.entity';
 import { ProductEntity } from '../product/product.entity';
 

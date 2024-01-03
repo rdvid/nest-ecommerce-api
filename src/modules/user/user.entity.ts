@@ -1,6 +1,13 @@
 import { Exclude } from 'class-transformer';
 import { OrderEntity } from '../order/order.entity';
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { 
+    Entity, 
+    Column, 
+    CreateDateColumn, 
+    UpdateDateColumn, 
+    DeleteDateColumn, 
+    PrimaryGeneratedColumn, 
+    OneToMany } from 'typeorm';
 
 @Entity({ name: 'users' })
 export class UserEntity {

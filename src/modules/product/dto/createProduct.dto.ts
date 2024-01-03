@@ -1,5 +1,14 @@
-import { ArrayMinSize, ArrayNotEmpty, IsArray, IsDate, IsEmpty, IsNotEmpty, 
-    IsNumber, IsOptional, IsString, IsUUID, MaxLength, Min } from "class-validator";
+import { 
+    ArrayMinSize, 
+    ArrayNotEmpty, 
+    IsArray, 
+    IsDate, 
+    IsNotEmpty, 
+    IsNumber, 
+    IsOptional, 
+    IsString, 
+    MaxLength, 
+    Min } from "class-validator";
 import { ProductEntity } from "../product.entity";
 import { Type } from "class-transformer";
 
