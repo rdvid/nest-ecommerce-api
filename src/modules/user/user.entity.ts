@@ -12,6 +12,17 @@ import {
 @Entity({ name: 'users' })
 export class UserEntity {
 
+    constructor(user?: Partial<UserEntity>) {
+        this.id = user?.id || "";
+        this.name = user?.name || "";
+        this.email = user?.email || "";
+        this.password = user?.password || "";
+        // this.orders = user?.orders || [];
+        this.createdAt = user?.createdAt || "";
+        this.updatedAt = user?.updatedAt || "";
+        this.deletedAt = user?.deletedAt || "";
+    }
+
     @PrimaryGeneratedColumn('uuid')
     id: string;
 

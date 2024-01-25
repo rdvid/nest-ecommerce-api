@@ -32,7 +32,7 @@ export class UserController{
     }
 
     @Get()
-    async listUsers(@Query('email') email: string){
+    async listUsers(@Query('email') email?: string){
         
         if(email){
             return await this.userService.retrieveUser('', email);

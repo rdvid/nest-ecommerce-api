@@ -5,6 +5,7 @@ import { ProductService } from "../../modules/product/product.service";
 import { Cache } from "cache-manager";
 import { ProductEntity } from "./product.entity";
 import { LoggerService } from "../logger/logger.service";
+import { ListProductDto } from "./dto/listProduct.dto";
 
 @Controller('/products')
 export class ProductController{
@@ -34,8 +35,14 @@ export class ProductController{
 
     @Get()
     async listProducts(){
-        // TODO: implement feature of query filtering
-        return this.productService.listProducts();
+        let products: ListProductDto[] | ListProductDto | undefined = await this.cacheManager.get<ListProductDto[]>(`products`);
+        
+        if(!products){
+            products = await this.productService.listProducts();
+            await this.cacheManager.set('products', products);
+        }
+        
+        return products; 
     }
 
     @Get('/:id')
@@ -53,7 +60,6 @@ export class ProductController{
             message: "product found",
             product
         }
-        
         
         
     }

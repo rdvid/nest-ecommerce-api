@@ -12,6 +12,7 @@ import { redisStore } from 'cache-manager-redis-yet';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { GlobalLoggerInterceptor } from './resources/intercepters/global-logger.interceptor';
 import { LoggerModule } from './modules/logger/logger.module';
+import { TestingModule } from '@nestjs/testing';
 
 // TODO: change imports to relative
 // TODO: implement unit tests
