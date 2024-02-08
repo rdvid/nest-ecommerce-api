@@ -61,7 +61,7 @@ This project remain in constant development. Next features will be focused on:
 
 [How to create a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
-<h3 align="center">💙 Proudly developed by:<h3>
+<h3 align="center">❤️ Proudly developed by:<h3>
 
 <table align="center">
   <tr>
