@@ -1,4 +1,4 @@
-<h1 align="center">Nest Store API</h1>
+<h1 align="center">Nest Ecommerce API</h1>
 
 
 ![Nest](https://img.shields.io/badge/Nestjs-000000?style=for-the-badge&logo=nestjs&logoColor=red)
